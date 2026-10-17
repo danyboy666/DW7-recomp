@@ -1,0 +1,66 @@
+# Game data — never commit
+*.iso
+*.bin
+*.cue
+*.chd
+*.img
+*.mds
+*.mdf
+*.nrg
+*.ccd
+*.sub
+PSX version/
+
+# BIOS dumps and built BIOS artifacts
+SCPH*.BIN
+SCPH*.bin
+openbios.bin
+bios/*.bin
+bios.cfg
+
+# Save data / memory cards
+*.mcr
+*.mcd
+*.psxcard
+saves/
+
+# Generated game code (derived from disc images)
+generated/
+# Framework-generated BIOS/game C
+# (keep the scaffolding, never the derived binaries/headers)
+*.exe
+!tools/**/*.exe
+
+# Build artifacts
+build/
+cmake-build-*/
+out/
+*.o
+*.obj
+*.a
+*.lib
+*.so
+*.dll
+*.dylib
+*.elf
+*.pdb
+*.ilk
+
+# Local agent files — never commit
+.env
+AGENTS.md
+opencode_history.md
+opencode.json
+
+# Caches / tooling
+.cache/
+__pycache__/
+*.pyc
+.vs/
+.vscode/
+.idea/
+
+# OS junk
+.DS_Store
+Thumbs.db
+desktop.ini
