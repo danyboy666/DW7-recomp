@@ -1,61 +1,104 @@
-# DW7-recomp
+# DW7 Recompiled
 
-Native PC port of **Dragon Warrior VII** (PlayStation 1, SLUS-01206, 2 discs)
-via static recompilation — not an emulator.
+<!-- retcomm-readme-metrics -->
+[![GitHub downloads (all assets, all releases)](https://img.shields.io/github/downloads/danyboy666/DW7-recomp/total)](https://github.com/danyboy666/DW7-recomp/releases)
+[![GitHub downloads (latest release)](https://img.shields.io/github/downloads/danyboy666/DW7-recomp/latest/total)](https://github.com/danyboy666/DW7-recomp/releases/latest)
+[![GitHub release](https://img.shields.io/github/v/release/danyboy666/DW7-recomp)](https://github.com/danyboy666/DW7-recomp/releases/latest)
+<!-- /retcomm-readme-metrics -->
 
-**Status: early development — not yet playable.**
+Static recompilation of **DW7** built on
+[psxrecomp](https://github.com/mstan/psxrecomp) and
+[recomp-ui](https://github.com/RetroPortingToolKit/recomp-ui).
 
-Built on [PSXRecomp](https://github.com/RetroPortingToolKit/psxrecomp): the
-game's MIPS R3000A code is translated to C ahead of time, compiled to native
-x64, and linked against a PS1 hardware runtime. The bundled open-source
-[OpenBIOS](https://github.com/grumpycoders/pcsx-redux) runs as the kernel —
-no retail BIOS dump is required.
+_Add a short pitch in catalog_identity.json / README._
 
-## What this is
+| | |
+|---|---|
+| Players | 2 |
+| Region | USA |
+| Publisher | — |
+| Year | — |
 
-- The game becomes a native Linux/Windows program. Your CPU runs the
-  recompiled code directly; there is no instruction-by-instruction
-  emulation on the hot path.
-- PS1 games stream code off the disc at runtime (overlays). PSXRecomp
-  captures each overlay the moment it loads and compiles it to native code,
-  cached and reused from then on. Anything not yet compiled runs on a
-  correctness-first MIPS interpreter until it is.
-- Targets: **Linux** and **Windows**, 64-bit.
+Scaffolded with the New Project Layout. See
+`psxrecomp/docs/GAME_PROJECT_SETUP.md` for the full flow.
 
-## Bring your own disc
+<!-- retcomm-readme-launcher -->
+## Retro Launcher
 
-This repository contains **no game data**. To build and play, you need your
-own legally obtained disc images of Dragon Warrior VII (Disc 1 and Disc 2),
-as `.bin`/`.cue` or `.iso` (raw MODE2/2352 dumps work). You are responsible
-for complying with the law in your jurisdiction.
+You can run this title **standalone** (download the release zip, point it at
+your disc, play), or manage installs, updates, and disc/BIOS wiring with
+**[Retro Launcher](https://github.com/RetroPortingToolKit/Retro-Launcher)** —
+the Retro Compilation Manager hub for self-compiling recomps.
 
-## Building
+[Downloads](https://github.com/RetroPortingToolKit/Retro-Launcher/releases) ·
+[Full README & features](https://github.com/RetroPortingToolKit/Retro-Launcher#readme)
 
-> Build instructions will land here once the game project scaffolding is
-> committed. Development follows the
-> [PSXRecomp game project setup](https://github.com/RetroPortingToolKit/psxrecomp/blob/master/docs/GAME_PROJECT_SETUP.md).
+<p align="center">
+  <img src="https://raw.githubusercontent.com/RetroPortingToolKit/Retro-Launcher/main/docs/screenshots/hub-and-game-launcher.png" alt="Retro hub with a background build, next to a title’s recomp-ui launcher" width="720">
+</p>
 
-Prerequisites (high level):
+<p align="center">
+  <img src="https://raw.githubusercontent.com/RetroPortingToolKit/Retro-Launcher/main/docs/screenshots/queue-and-background-build.png" alt="Background cmake build with titles queued" width="720">
+</p>
 
-- Git, Python 3, CMake 3.20+, Ninja, C/C++ toolchain
-  (MSVC or the bundled [RetroPorting toolchain](https://github.com/RetroPortingToolKit/RetroPorting-Toolchains/releases/latest) on Windows)
-- Your two DW7 disc images
-
-## Development
-
-Work happens on the `dev` branch; `main` stays stable.
-
-## Credits
-
-- [RetroPortingToolKit](https://github.com/RetroPortingToolKit) / mstan —
-  [PSXRecomp](https://github.com/RetroPortingToolKit/psxrecomp) framework
-- [PCSX-Redux project](https://github.com/grumpycoders/pcsx-redux) — OpenBIOS
-- Enix (original developer/publisher of Dragon Warrior VII) — this project
-  is a fan preservation effort; all rights to the game belong to their
-  respective owners
+Retro checks for updates, installs the prebuilt release zips, and automates
+BIOS/ROM/save plumbing so you are not stuck repeating each game’s first run by hand.
+<!-- /retcomm-readme-launcher -->
 
 ## Legal
 
-This project does not distribute Dragon Warrior VII, any Sony PlayStation
-BIOS, or any other copyrighted game content. It is not affiliated with or
-endorsed by Sony, Enix, or Square Enix.
+You must own the original game. Disc images under `disc/` are gitignored and
+must never be committed. Retail BIOS dumps are not redistributed and no C
+derived from one may be committed; releases run on the bundled MIT OpenBIOS.
+
+`generated/` (the recompiled game C) **is committed**: releases ship the
+compiled game, built by CI from that tree. Regenerate and commit it whenever
+seeds or the framework pin change.
+
+Default app icon: `assets/psxrecomp.ico` (and `.png` / `.svg`) — Retro-themed controller mark from `psxrecomp/assets/`. Windows builds embed it via `APP_ICON`.
+
+Optional box art under `launcher_assets/img/` may come from
+[libretro-thumbnails](https://github.com/libretro-thumbnails/libretro-thumbnails)
+(`Named_Boxarts`); see `BOXART_SOURCE.txt` when present.
+
+## Quick start (dev)
+
+```bash
+git submodule update --init --recursive
+./psxrecomp/tools/ci/build_emitters.sh
+python3 psxrecomp/psxrecomp_cli.py generate \
+  --config game.toml --project-root . --disc disc/<your>.cue
+git add generated && git commit -m "Regenerate game C"
+cmake -S . -B build-release -G Ninja -DCMAKE_BUILD_TYPE=Release
+cmake --build build-release --target psx-runtime
+```
+
+Releases: tag `vX.Y.Z` (or run the *Release builds* workflow). CI builds the
+committed `generated/` C on Linux, Windows and macOS and attaches
+`dw7-<version>-<platform>.zip`, the compiled game. Locally:
+`scripts/package_release.sh build-release linux-x64`.
+
+## Symbols
+
+Progressive map: `symbols.toml` → `python3 tools/sync_symbols.py` →
+`psx_symbols.h` (`PSX_FN_*`). See `psxrecomp/docs/SYMBOLS.md`.
+
+## Framework pins
+
+Submodule gitlinks (`psxrecomp`, optional `recomp-ui`, nested `recomp-net`)
+are authoritative. `framework_pins.txt` is an optional scaffold snapshot;
+release CI logs SHAs with `record_pins.sh` but builds whatever the gitlinks
+resolve to. Bump submodules deliberately — do not float on `main`/`master`
+in release CI.
+
+<!-- retcomm-readme-raid -->
+---
+
+<p align="center">
+  <sub><b>R.A.I.D. — Retro AI Development</b> · a Discord for AI-assisted retro reverse-engineering, decomp &amp; recomp</sub>
+</p>
+
+<p align="center">
+  <a href="https://discord.gg/Ad9BwSzctP"><img src=".github/raid-discord.png" alt="Join the Retro AI Development (R.A.I.D.) Discord" width="200"></a>
+</p>
+<!-- /retcomm-readme-raid -->

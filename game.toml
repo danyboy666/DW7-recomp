@@ -1,0 +1,54 @@
+# Autofilled by tools/new_project_layout/probe_disc.py from your legal dump.
+# Review before shipping. Runtime quirks / overlay seeds still need hand work.
+
+[game]
+name = "DW7"
+id = "SLUS-P0120"
+players = 2
+exe = "disc/SLUSP012.06"
+disc = "/mnt/c/Users/dferron/Desktop/opencode working folder/Dragon Warrior Vii pc port/PSX version/Dragon Warrior VII (Disc 1).cue"
+load_address = "0x80017F00"
+entry_pc = "0x8008E284"
+text_size = "0x000A4800"
+stack_base = "0x801FFFF0"
+
+# Digests are for data Track 01 (first BINARY FILE / TRACK 01).
+[prepare_disc]
+out_dir = "disc"
+bin_name = "Dragon Warrior VII (Disc 1).iso"
+cue_name = "Dragon Warrior VII (Disc 1).cue"
+boot_exe = "SLUSP012.06"
+known_sizes = [711567024]
+known_md5 = [
+  "aeb42bf45abde4716bf833f00ecc5325",
+]
+known_sha1 = [
+  "56f04f8c54f8620ae608210bd35c7dc94d8d9559",
+]
+known_crc32 = [
+  "64367925",
+]
+
+[recompiler]
+seeds = "seeds/ghidra_funcs.txt"
+out_dir = "generated"
+strict = true
+
+[runtime]
+window_title = "DW7 Recompiled"
+memcard_dir = "saves"
+overlay_cache = true
+
+[video]
+renderer = "opengl"
+aspect_ratio = "4:3"
+
+[controller]
+default_mode = "digital"
+
+# Online mount gate: digests + track count + optional TOC fingerprint
+# (see docs/NETPLAY.md).
+[netplay]
+require_cue = true
+required_tracks = 1
+required_disc_fp = "43ea2594897877e3b67fdf12ce1dfae9ebc0bb3230fafcb0433a4181fc24304e"
