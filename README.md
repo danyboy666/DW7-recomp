@@ -6,14 +6,13 @@
 [![GitHub release](https://img.shields.io/github/v/release/danyboy666/DW7-recomp)](https://github.com/danyboy666/DW7-recomp/releases/latest)
 <!-- /retcomm-readme-metrics -->
 
-Static recompilation of **Dragon Warrior VII** (PlayStation, 2001) built on
-[psxrecomp](https://github.com/mstan/psxrecomp) and
-[recomp-ui](https://github.com/RetroPortingToolKit/recomp-ui).
+A native PC port of **Dragon Warrior VII** (PlayStation, 2001), built with
+[psxrecomp](https://github.com/mstan/psxrecomp).
 
-> A native PC port of Dragon Warrior VII: the game's MIPS R3000A code is
-> statically recompiled to C and compiled to native x64, linked against a PS1
-> hardware runtime on the bundled OpenBIOS. Not an emulator — the game runs as
-> a native program. Bring your own disc; this repository ships no game data.
+> The game's MIPS R3000A code is statically recompiled to C and compiled to
+> native x64, then run against a PS1 hardware runtime on the bundled MIT
+> OpenBIOS. This is **not an emulator** — the game runs as a native program.
+> You must supply your own disc; no game data is included in this repository.
 
 | | |
 |---|---|
@@ -22,93 +21,108 @@ Static recompilation of **Dragon Warrior VII** (PlayStation, 2001) built on
 | Publisher | Enix |
 | Developer | Heart Beat / ArtePiazza / Bird Studio |
 | Year | 2001 |
-| Serial | SLUS-01206 |
+| Serial | SLUS-01206 (Disc 1 of 2) |
 
 ## Status
 
-Boots and plays on Linux and Windows (OpenGL, Vulkan and software renderers).
-The title → **Continue / New Game / Delete File** menu and the New Game
-name-entry screen render and accept input. `main` tracks a stable, playable
-build; ongoing bring-up (field story, battles, overlays) lands on `dev` first.
+Boots and runs on **Linux** and **Windows** with the OpenGL, Vulkan or software
+renderer:
 
-> **Maintenance note:** the committed `generated/` C carries a required fix —
-> `cpu->pc = <addr>` before each `psx_syscall` — that the game-code emitter
-> currently omits (the BIOS emitter sets it). Re-running `generate` drops it;
-> land the one-line fix in `recompiler/src/code_generator.cpp` so it is
-> permanent, then regenerate. Do not regenerate `generated/` for a release
-> without reapplying this.
+- intro and title screens, and the main menu (**Continue / New Game /
+  Delete File**) — menus render and accept input
+- **New Game → name entry**
 
-Scaffolded with the New Project Layout. See
-`psxrecomp/docs/GAME_PROJECT_SETUP.md` for the full flow.
+Under active bring-up: the opening field/story, battles, and remaining
+game overlays. This `main` branch tracks the latest **stable, playable**
+build; new work lands on `dev` first.
 
-<!-- retcomm-readme-launcher -->
-## Retro Launcher
+## Requirements
 
-You can run this title **standalone** (download the release zip, point it at
-your disc, play), or manage installs, updates, and disc/BIOS wiring with
-**[Retro Launcher](https://github.com/RetroPortingToolKit/Retro-Launcher)** —
-the Retro Compilation Manager hub for self-compiling recomps.
+- Your own **Dragon Warrior VII Disc 1** image (`.bin`/`.cue`, US release
+  `SLUS-01206`).
+- A BIOS is **not** required: the game runs on the bundled, MIT-licensed
+  OpenBIOS. A retail PS1 BIOS may optionally be used if you have your own dump.
 
-[Downloads](https://github.com/RetroPortingToolKit/Retro-Launcher/releases) ·
-[Full README & features](https://github.com/RetroPortingToolKit/Retro-Launcher#readme)
+## Running
 
-<p align="center">
-  <img src="https://raw.githubusercontent.com/RetroPortingToolKit/Retro-Launcher/main/docs/screenshots/hub-and-game-launcher.png" alt="Retro hub with a background build, next to a title’s recomp-ui launcher" width="720">
-</p>
+```bash
+# Linux
+build-release/DW7_Recompiled --game game.toml --disc /path/to/DW7.cue
 
-<p align="center">
-  <img src="https://raw.githubusercontent.com/RetroPortingToolKit/Retro-Launcher/main/docs/screenshots/queue-and-background-build.png" alt="Background cmake build with titles queued" width="720">
-</p>
+# Windows (PowerShell)
+build-release-win\DW7_Recompiled.exe --game game.toml --disc "C:\path\to\DW7.cue"
+```
 
-Retro checks for updates, installs the prebuilt release zips, and automates
-BIOS/ROM/save plumbing so you are not stuck repeating each game’s first run by hand.
-<!-- /retcomm-readme-launcher -->
+The disc path may also be set once in `game.toml` (`[runtime] disc = ...`).
 
-## Legal
+## Repository layout
 
-You must own the original game. Disc images under `disc/` are gitignored and
-must never be committed. Retail BIOS dumps are not redistributed and no C
-derived from one may be committed; releases run on the bundled MIT OpenBIOS.
+| Path | Purpose |
+|---|---|
+| `game.toml` | Game config: title, disc, renderer, paths |
+| `generated/` | Recompiled game C (`SLUSP012.06_full_*.c`) — **committed** |
+| `seeds/ghidra_funcs.txt` | Function seeds used by the recompiler |
+| `psxrecomp/` | Framework submodule (recompiler, runtime, OpenBIOS) |
+| `symbols.toml`, `psx_symbols.h` | Function symbol map (see *Symbols*) |
+| `mods/`, `launcher_assets/` | Optional mods and box art |
+| `build-release*/` | Local build output (gitignored) |
 
-`generated/` (the recompiled game C) **is committed**: releases ship the
-compiled game, built by CI from that tree. Regenerate and commit it whenever
-seeds or the framework pin change.
+## Building from source
 
-Default app icon: `assets/psxrecomp.ico` (and `.png` / `.svg`) — Retro-themed controller mark from `psxrecomp/assets/`. Windows builds embed it via `APP_ICON`.
-
-Optional box art under `launcher_assets/img/` may come from
-[libretro-thumbnails](https://github.com/libretro-thumbnails/libretro-thumbnails)
-(`Named_Boxarts`); see `BOXART_SOURCE.txt` when present.
-
-## Quick start (dev)
+Requires `cmake`, `ninja`, a C/C++ toolchain, and Python 3 (Windows builds use
+the bundled RetroPorting toolchain).
 
 ```bash
 git submodule update --init --recursive
+
+# 1. Regenerate the recompiled game C (see the maintenance note below first)
 ./psxrecomp/tools/ci/build_emitters.sh
 python3 psxrecomp/psxrecomp_cli.py generate \
-  --config game.toml --project-root . --disc disc/<your>.cue
-git add generated && git commit -m "Regenerate game C"
+  --config game.toml --project-root . --disc disc/DW7.cue
+
+# 2. Build the runtime + game
 cmake -S . -B build-release -G Ninja -DCMAKE_BUILD_TYPE=Release
 cmake --build build-release --target psx-runtime
 ```
 
-Releases: tag `vX.Y.Z` (or run the *Release builds* workflow). CI builds the
-committed `generated/` C on Linux, Windows and macOS and attaches
-`dw7-<version>-<platform>.zip`, the compiled game. Locally:
-`scripts/package_release.sh build-release linux-x64`.
+Output: `build-release/DW7_Recompiled`. There are currently no CI workflows in
+this repository; builds are produced locally.
+
+## Maintenance note — do not regenerate without this fix
+
+The committed `generated/` C contains a required fix that the game-code emitter
+does **not** yet produce: each `psx_syscall(...)` is preceded by
+`cpu->pc = <addr>u;`. Without it, the game's custom `syscall` handoff records
+EPC = 0, corrupts a thread's resume PC, and the machine livelocks before the
+menu is drawn.
+
+`generate` will drop this fix. The permanent resolution is a one-line change in
+the framework emitter (`recompiler/src/code_generator.cpp`), after which
+`generated/` can be regenerated cleanly. Until then, re-apply the three edits
+(in `generated/SLUSP012.06_full_33.c` and `_41.c`) after any regeneration.
 
 ## Symbols
 
-Progressive map: `symbols.toml` → `python3 tools/sync_symbols.py` →
+Progressive function map: `symbols.toml` → `tools/sync_symbols.py` →
 `psx_symbols.h` (`PSX_FN_*`). See `psxrecomp/docs/SYMBOLS.md`.
 
 ## Framework pins
 
-Submodule gitlinks (`psxrecomp`, optional `recomp-ui`, nested `recomp-net`)
-are authoritative. `framework_pins.txt` is an optional scaffold snapshot;
-release CI logs SHAs with `record_pins.sh` but builds whatever the gitlinks
-resolve to. Bump submodules deliberately — do not float on `main`/`master`
-in release CI.
+Submodule gitlinks (`psxrecomp`) are authoritative; `framework_pins.txt` is an
+optional scaffold snapshot. Bump submodules deliberately — do not float on
+`main` in release builds.
+
+## Legal
+
+You must own the original game. Disc images (`.bin`/`.cue`/`.iso`), BIOS dumps,
+save data and any C derived from a retail BIOS are never committed; releases run
+on the bundled MIT OpenBIOS. `generated/` (the recompiled game C) **is**
+committed — it ships the compiled game.
+
+Default app icon: `assets/psxrecomp.ico` (and `.png` / `.svg`). Optional box art
+under `launcher_assets/img/` may come from
+[libretro-thumbnails](https://github.com/libretro-thumbnails/libretro-thumbnails)
+(`Named_Boxarts`); see `BOXART_SOURCE.txt` when present.
 
 <!-- retcomm-readme-raid -->
 ---
