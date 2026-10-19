@@ -6,18 +6,36 @@
 [![GitHub release](https://img.shields.io/github/v/release/danyboy666/DW7-recomp)](https://github.com/danyboy666/DW7-recomp/releases/latest)
 <!-- /retcomm-readme-metrics -->
 
-Static recompilation of **DW7** built on
+Static recompilation of **Dragon Warrior VII** (PlayStation, 2001) built on
 [psxrecomp](https://github.com/mstan/psxrecomp) and
 [recomp-ui](https://github.com/RetroPortingToolKit/recomp-ui).
 
-_Add a short pitch in catalog_identity.json / README._
+> A native PC port of Dragon Warrior VII: the game's MIPS R3000A code is
+> statically recompiled to C and compiled to native x64, linked against a PS1
+> hardware runtime on the bundled OpenBIOS. Not an emulator — the game runs as
+> a native program. Bring your own disc; this repository ships no game data.
 
 | | |
 |---|---|
-| Players | 2 |
+| Players | 1 |
 | Region | USA |
-| Publisher | — |
-| Year | — |
+| Publisher | Enix |
+| Developer | Heart Beat / ArtePiazza / Bird Studio |
+| Year | 2001 |
+| Serial | SLUS-01206 |
+
+## Status
+
+Boots and plays on Linux and Windows (OpenGL, Vulkan and software renderers).
+The title → **Continue / New Game / Delete File** menu and the New Game
+name-entry screen render and accept input; the field story and battles are
+under active bring-up. See the `dev` branch for the latest state.
+
+> **Generator note (dev):** the committed `generated/` C carries a local fix —
+> `cpu->pc = <addr>` before each `psx_syscall` — that the game-code emitter
+> currently omits (the BIOS emitter sets it). Re-running `generate` drops it;
+> land the one-line fix in `recompiler/src/code_generator.cpp` so it is
+> permanent, then regenerate.
 
 Scaffolded with the New Project Layout. See
 `psxrecomp/docs/GAME_PROJECT_SETUP.md` for the full flow.

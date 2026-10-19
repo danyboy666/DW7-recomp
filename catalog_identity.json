@@ -6,11 +6,12 @@
     "boot_exe": "SLUSP012.06"
   },
   "marketing": {
-    "description": "",
-    "publisher": "",
-    "year": "",
+    "description": "Dragon Warrior VII is a role-playing game developed by Heart Beat, ArtePiazza and Bird Studio and published by Enix for the PlayStation in 2001. This project is a native x64 recompilation of the North American release (SLUS-01206), built on psxrecomp.",
+    "publisher": "Enix",
+    "year": "2001",
     "region": "USA",
-    "players": 2
+    "players": 1,
+    "developer": "Heart Beat / ArtePiazza / Bird Studio"
   },
   "rom_identity": {
     "cue_name": "Dragon Warrior VII (Disc 1).cue",
@@ -38,7 +39,7 @@
     "source": "boot_exe_jal"
   },
   "warnings": [
-    "cue has only 1 TRACK \u2014 Track-01-only dumps fail multi-track netplay/catalog gates; prefer a full Redump cue."
+    "cue has only 1 TRACK — Track-01-only dumps fail multi-track netplay/catalog gates; prefer a full Redump cue."
   ],
   "notes": [
     "entry_pc/load_address/text_size/stack_base taken from PS-X EXE header.",
