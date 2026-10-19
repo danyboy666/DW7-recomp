@@ -1,0 +1,13 @@
+{
+  "$schema": "https://recomp.fyi/schema/v1.json",
+  "game": "DW7",
+  "system": "PS1",
+  "type": "recomp",
+  "toolchain": "psxrecomp",
+  "status": "exploring",
+  "project": "DW7Recomp",
+  "original": {
+    "region": "USA",
+    "serial": "SLUS-P0120"
+  }
+}
