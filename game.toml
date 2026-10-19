@@ -47,22 +47,18 @@ memcard_dir = "saves"
 overlay_cache = true
 
 [video]
+# Faithful PSX defaults; all enhancements are opt-in from the in-game menu (F1
+# -> Video). See README "Graphical enhancements".
 renderer = "opengl"
 aspect_ratio = "4:3"
-# --- Graphical enhancements (see README / opencode_history.md) ---
-internal_resolution = "1440p"      # 6x internal upscale (try "4k" for 9x)
-dynamic_resolution = true          # keep 60 fps under load (steps 1x..ceiling)
-dynamic_resolution_min = "1080p"
-texture_filtering = "xbr"
-antialiasing = true
-antialiasing_mode = "fxaa_hq"
-dithering = "fine"
-fmv_filter = "bicubic"
-fmv_chroma_smoothing = true
-render_thread = true
+# DW7 renders its 24-bit title/menu with GPU VRAM copies, so the CPU-upload
+# coverage span never covers the display; the trailing-margin fill then blanks
+# the right edge. 0 disables that fill (fixes the missing right-side pixels).
+depth24_trailing_margin = 0
 
 [controller]
-default_mode = "digital"
+# PS1 DualShock: analog by default (pads report ID 0x73).
+default_mode = "analog"
 
 # Online mount gate: digests + track count + optional TOC fingerprint
 # (see docs/NETPLAY.md).

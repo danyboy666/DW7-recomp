@@ -91,18 +91,35 @@ this repository; builds are produced locally.
 ## In-game menu
 
 Press **F1** in-game (rebindable as `ShortcutMenu` in `config.ini [KeyMap]`) for
-the shortcut menu, which freezes the game and offers:
+the shortcut menu. The game starts with **faithful PSX defaults**; everything
+here is opt-in. The menu is organised into categories:
 
-- **Quick Save / Quick Load** (save-state slot 1) and **Save States…** (the
-  full slot browser)
-- **Memory Cards…** — manage the virtual cards (`saves/card1.mcd`,
-  `saves/card2.mcd`): per-slot usage, **Format**, and **Import/Export** of a
-  128 KB `.mcd` via a native file dialog
-- **Change Disc** — mount the other disc (multi-disc roster)
-- **Scanlines / Fast Forward / Fullscreen** toggles, and **Quit to Desktop**
+- **GAME** — Quick Save / Quick Load (save-state slot 1), **Save States…** (the
+  full slot browser), **Memory Cards…** (per-slot usage; **Format** and
+  **Import/Export** of a 128 KB `.mcd` via a native file dialog), **Change
+  Disc**, and **Quit**.
+- **VIDEO** — display ratio (original 4:3 / widescreen 16:9), upscaling
+  (Native/720p/1080p/1440p/4K — restart), dynamic resolution, fullscreen mode
+  (windowed / borderless / exclusive), texture smoothing (Nearest / Bilinear /
+  xBR), anti-aliasing (Off / FXAA / FXAA HQ), FMV filter + chroma smoothing,
+  scanlines, dithering, bloom, mipmaps + anisotropic filtering, and accurate
+  blending.
+- **CONTROLLER** — Player 1/2 **device** (Keyboard / a connected controller /
+  none), pad mode (**Analog (DualShock)** by default, or Digital), and
+  **keyboard remapping** per PS1 button (persisted to `keybinds.ini`).
 
-Navigate with the arrow keys, confirm with Enter, back out with Esc. A
-controller's D-pad + A/B also drive it.
+Navigate with arrows, confirm with Enter, back out with Esc; a controller's
+D-pad + A/B also drive it. The menu pauses the game while open.
+
+### Controller notes
+
+- A connected game controller is detected automatically; with none present the
+  **keyboard is the default** input.
+- The emulated pad reports a **DualShock (analog, ID 0x73)** by default, so
+  analog sticks work; per-player Digital mode is available in the menu.
+- Keyboard bindings are remappable in-game (CONTROLLER → Remap P1 Keys) and
+  stored in `keybinds.ini`. Gamepad buttons currently use the classic fixed
+  PS1 mapping (SDL-standard layout); remapping them is a follow-up.
 
 ### Multi-disc
 
@@ -115,24 +132,23 @@ switches the mounted image but the game cannot continue onto Disc 2's program.
 
 ## Graphical enhancements
 
-Enabled by default in `game.toml` (`[video]`); see `psxrecomp/docs/` for the
-full option list.
+Off by default — enable what you want from the in-game **VIDEO** page (choices
+persist to `settings.toml`). Highlights:
 
 | Setting | Effect |
 |---|---|
-| `internal_resolution = "1440p"` | 6× internal upscale |
-| `dynamic_resolution` + `_min = "1080p"` | keeps 60 fps under load |
-| `texture_filtering = "xbr"` | edge-directed 2D upscaling |
-| `antialiasing_mode = "fxaa_hq"` | post AA |
-| `fmv_filter = "bicubic"`, `fmv_chroma_smoothing` | cleaner FMVs |
-| `dithering = "fine"` | subtle grain that fades at high res |
-| `render_thread = true` | GL on its own thread |
+| Upscaling (Native…4K) | internal resolution (restart to apply) |
+| Dynamic resolution | keeps 60 fps under load |
+| Smoothing: xBR / Bilinear | 2D texture upscaling |
+| Anti-aliasing: FXAA / FXAA HQ | post AA |
+| FMV filter (bicubic) + chroma smoothing | cleaner FMVs |
+| Mipmaps + anisotropic filtering | sharper receding 3D |
+| Dithering / Bloom / Scanlines | taste / glow / CRT |
 
-Further options (off by default): PGXP (`perspective_texturing`,
+Further options (config-only today): PGXP (`perspective_texturing`,
 `pgxp_depth_buffer`, `pgxp_color_correction`, `pgxp_seam = "fine"` — enable the
-`psx.enhancement.pgxp` mod), `texture_lod = "mipmap"` +
-`anisotropic_filtering`, `bloom`, HD texture packs (OpenGL), and
-`internal_resolution = "4k"`/`"8k"`.
+`psx.enhancement.pgxp` mod), HD texture packs (OpenGL), and
+`internal_resolution = "8k"`.
 
 ## Maintenance note — do not regenerate without this fix
 
