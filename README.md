@@ -33,8 +33,8 @@ renderer:
 - **New Game → name entry**
 
 Under active bring-up: the opening field/story, battles, and remaining
-game overlays. This `main` branch tracks the latest **stable, playable**
-build; new work lands on `dev` first.
+game overlays. `main` tracks a stable, playable build; new work lands on
+`dev` first.
 
 ## Requirements
 
