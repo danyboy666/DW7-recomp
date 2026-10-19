@@ -88,6 +88,52 @@ cmake --build build-release --target psx-runtime
 Output: `build-release/DW7_Recompiled`. There are currently no CI workflows in
 this repository; builds are produced locally.
 
+## In-game menu
+
+Press **F1** in-game (rebindable as `ShortcutMenu` in `config.ini [KeyMap]`) for
+the shortcut menu, which freezes the game and offers:
+
+- **Quick Save / Quick Load** (save-state slot 1) and **Save States…** (the
+  full slot browser)
+- **Memory Cards…** — manage the virtual cards (`saves/card1.mcd`,
+  `saves/card2.mcd`): per-slot usage, **Format**, and **Import/Export** of a
+  128 KB `.mcd` via a native file dialog
+- **Change Disc** — mount the other disc (multi-disc roster)
+- **Scanlines / Fast Forward / Fullscreen** toggles, and **Quit to Desktop**
+
+Navigate with the arrow keys, confirm with Enter, back out with Esc. A
+controller's D-pad + A/B also drive it.
+
+### Multi-disc
+
+Disc 1 and Disc 2 are both registered in `game.toml` (`discs` /
+`disc_serials`), and the menu can mount either. Note that DW7 is an
+*N-programs* title — Disc 2 boots its own executable (`SLUSP013.46`), so a
+mid-game 1→2 swap still requires Disc 2 to be statically recompiled as a
+second program (framework work, in progress upstream). Until then the menu
+switches the mounted image but the game cannot continue onto Disc 2's program.
+
+## Graphical enhancements
+
+Enabled by default in `game.toml` (`[video]`); see `psxrecomp/docs/` for the
+full option list.
+
+| Setting | Effect |
+|---|---|
+| `internal_resolution = "1440p"` | 6× internal upscale |
+| `dynamic_resolution` + `_min = "1080p"` | keeps 60 fps under load |
+| `texture_filtering = "xbr"` | edge-directed 2D upscaling |
+| `antialiasing_mode = "fxaa_hq"` | post AA |
+| `fmv_filter = "bicubic"`, `fmv_chroma_smoothing` | cleaner FMVs |
+| `dithering = "fine"` | subtle grain that fades at high res |
+| `render_thread = true` | GL on its own thread |
+
+Further options (off by default): PGXP (`perspective_texturing`,
+`pgxp_depth_buffer`, `pgxp_color_correction`, `pgxp_seam = "fine"` — enable the
+`psx.enhancement.pgxp` mod), `texture_lod = "mipmap"` +
+`anisotropic_filtering`, `bloom`, HD texture packs (OpenGL), and
+`internal_resolution = "4k"`/`"8k"`.
+
 ## Maintenance note — do not regenerate without this fix
 
 The committed `generated/` C contains a required fix that the game-code emitter

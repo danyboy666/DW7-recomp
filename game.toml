@@ -6,7 +6,14 @@ name = "DW7"
 id = "SLUS-P0120"
 players = 2
 exe = "disc/SLUSP012.06"
-disc = "/mnt/c/Users/dferron/Desktop/opencode working folder/Dragon Warrior Vii pc port/PSX version/Dragon Warrior VII (Disc 1).cue"
+# Multi-disc roster (Disc 1 of 2). The runtime can mount either disc;
+# DW7 is an N-programs set (Disc 2 boots its own EXE SLUSP013.46), so a
+# mid-game 1->2 swap still needs Disc 2 statically recompiled (framework).
+discs = [
+  "/mnt/c/Users/dferron/Desktop/opencode working folder/Dragon Warrior Vii pc port/PSX version/Dragon Warrior VII (Disc 1).cue",
+  "/mnt/c/Users/dferron/Desktop/opencode working folder/Dragon Warrior Vii pc port/PSX version/Dragon Warrior VII (Disc 2).cue",
+]
+disc_serials = ["SLUS-P0120", "SLUS-P0134"]
 load_address = "0x80017F00"
 entry_pc = "0x8008E284"
 text_size = "0x000A4800"
@@ -42,6 +49,17 @@ overlay_cache = true
 [video]
 renderer = "opengl"
 aspect_ratio = "4:3"
+# --- Graphical enhancements (see README / opencode_history.md) ---
+internal_resolution = "1440p"      # 6x internal upscale (try "4k" for 9x)
+dynamic_resolution = true          # keep 60 fps under load (steps 1x..ceiling)
+dynamic_resolution_min = "1080p"
+texture_filtering = "xbr"
+antialiasing = true
+antialiasing_mode = "fxaa_hq"
+dithering = "fine"
+fmv_filter = "bicubic"
+fmv_chroma_smoothing = true
+render_thread = true
 
 [controller]
 default_mode = "digital"
