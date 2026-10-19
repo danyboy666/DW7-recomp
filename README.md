@@ -91,8 +91,8 @@ this repository; builds are produced locally.
 ## In-game menu
 
 Press **F1** in-game (rebindable as `ShortcutMenu` in `config.ini [KeyMap]`) for
-the shortcut menu. The game starts with **faithful PSX defaults**; everything
-here is opt-in. The menu is organised into categories:
+the shortcut menu (glass/purple theme). The game starts with **faithful PSX
+defaults**; everything here is opt-in. The menu is organised into categories:
 
 - **GAME** — Quick Save / Quick Load (save-state slot 1), **Save States…** (the
   full slot browser), **Memory Cards…** (per-slot usage; **Format** and
@@ -102,8 +102,8 @@ here is opt-in. The menu is organised into categories:
   (Native/720p/1080p/1440p/4K — restart), dynamic resolution, fullscreen mode
   (windowed / borderless / exclusive), texture smoothing (Nearest / Bilinear /
   xBR), anti-aliasing (Off / FXAA / FXAA HQ), FMV filter + chroma smoothing,
-  scanlines, dithering, bloom, mipmaps + anisotropic filtering, and accurate
-  blending.
+  scanlines, dithering, bloom, mipmaps + anisotropic filtering, accurate
+  blending, and **Restore Default Settings** at the bottom of the list.
 - **CONTROLLER** — Player 1/2 **device** (Keyboard / a connected controller /
   none), pad mode (**Analog (DualShock)** by default, or Digital), and
   **remapping** of both the keyboard per PS1 button (persisted to
