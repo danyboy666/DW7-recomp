@@ -114,8 +114,13 @@ D-pad + A/B also drive it. The menu pauses the game while open.
 
 ### Controller notes
 
-- A connected game controller is detected automatically; with none present the
-  **keyboard is the default** input.
+- A connected game controller is detected automatically (shown by name in the
+  menu); with none present the **keyboard is the default** input, and the
+  runtime falls back to it automatically if a pad disconnects.
+- Works with standard SDL controllers — **Xbox One/Series, PS4 (DualShock),
+  PS5 (DualSense), Switch Pro/Joy-Con, Wii U Pro, Steam Controller/Deck** and
+  more via SDL3's built-in mapping; an optional `gamecontrollerdb.txt` next to
+  the executable extends it for any other pad.
 - The emulated pad reports a **DualShock (analog, ID 0x73)** by default, so
   analog sticks work; per-player Digital mode is available in the menu.
 - Keyboard and gamepad bindings are both remappable in-game (CONTROLLER →
