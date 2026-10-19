@@ -32686,7 +32686,7 @@ block_800A21C8:
 #ifdef PSX_ENABLE_BLOCK_CYCLES
     psx_cyc_step(cpu, 0x0u);
 #endif
-    psx_syscall(cpu, 0);  /* syscall 0 */  /* 0x800A21CC: 0x0000000C */
+    cpu->pc = 0x800A21CCu; psx_syscall(cpu, 0);  /* syscall 0 */  /* 0x800A21CC: 0x0000000C */
 #ifdef PSX_COSIM
     cosim_instr(0x800A21CCu);
 #endif
@@ -32746,7 +32746,7 @@ block_800A21D8:
 #ifdef PSX_ENABLE_BLOCK_CYCLES
     psx_cyc_step(cpu, 0x0u);
 #endif
-    psx_syscall(cpu, 0);  /* syscall 0 */  /* 0x800A21DC: 0x0000000C */
+    cpu->pc = 0x800A21DCu; psx_syscall(cpu, 0);  /* syscall 0 */  /* 0x800A21DC: 0x0000000C */
 #ifdef PSX_COSIM
     cosim_instr(0x800A21DCu);
 #endif

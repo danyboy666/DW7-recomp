@@ -23547,7 +23547,7 @@ block_8008B998:
 #ifdef PSX_ENABLE_BLOCK_CYCLES
     psx_cyc_step(cpu, 0x0u);
 #endif
-    psx_syscall(cpu, 0);  /* syscall 0 */  /* 0x8008B9C0: 0x0000000C */
+    cpu->pc = 0x8008B9C0u; psx_syscall(cpu, 0);  /* syscall 0 */  /* 0x8008B9C0: 0x0000000C */
 #ifdef PSX_COSIM
     cosim_instr(0x8008B9C0u);
 #endif
