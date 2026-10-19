@@ -106,7 +106,8 @@ here is opt-in. The menu is organised into categories:
   blending.
 - **CONTROLLER** — Player 1/2 **device** (Keyboard / a connected controller /
   none), pad mode (**Analog (DualShock)** by default, or Digital), and
-  **keyboard remapping** per PS1 button (persisted to `keybinds.ini`).
+  **remapping** of both the keyboard per PS1 button (persisted to
+  `keybinds.ini`) and the gamepad per PS1 button (persisted to `input.ini`).
 
 Navigate with arrows, confirm with Enter, back out with Esc; a controller's
 D-pad + A/B also drive it. The menu pauses the game while open.
@@ -117,9 +118,10 @@ D-pad + A/B also drive it. The menu pauses the game while open.
   **keyboard is the default** input.
 - The emulated pad reports a **DualShock (analog, ID 0x73)** by default, so
   analog sticks work; per-player Digital mode is available in the menu.
-- Keyboard bindings are remappable in-game (CONTROLLER → Remap P1 Keys) and
-  stored in `keybinds.ini`. Gamepad buttons currently use the classic fixed
-  PS1 mapping (SDL-standard layout); remapping them is a follow-up.
+- Keyboard and gamepad bindings are both remappable in-game (CONTROLLER →
+  Remap P1 Keys / Remap P1 Pad Buttons) and stored in `keybinds.ini` /
+  `input.ini`. The gamepad default is the classic PS1 (SDL-standard) layout;
+  per-device maps are supported via `input.ini [mapping.<guid>]`.
 
 ### Multi-disc
 
