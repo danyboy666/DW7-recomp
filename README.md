@@ -157,6 +157,31 @@ Further options (config-only today): PGXP (`perspective_texturing`,
 `psx.enhancement.pgxp` mod), HD texture packs (OpenGL), and
 `internal_resolution = "8k"`.
 
+## HD-2D mode
+
+An opt-in **HD-2D MODE** toggle (Video page, shipped **off**) applies a
+modern Octopath-style presentation in one go:
+
+- **3D**: PGXP on — perspective texturing, depth buffer, colour correction and
+  fine seam expansion (no affine wobble)
+- **2D / textures**: xBR smoothing, mipmaps + 8x anisotropic filtering
+- **Image**: 6x internal resolution (1440p), dynamic resolution, FXAA HQ,
+  bloom, 16:9 widescreen, clean gradients (dithering off)
+- **Post**: the `mods/hd2d.pfx` colour-grade chain (cool shadows, warm
+  highlights, soft vignette)
+
+Toggling it off restores faithful PSX defaults. The upscaling part needs a
+restart (surfaces are allocated at boot); the cosmetic parts apply instantly.
+The mode and any manual overrides persist in `hd2d.ini` next to the executable.
+
+### HD textures
+
+For genuinely high-resolution sprites, enable **HD TEXTURES (OPENGL)** — or use
+**DUMP TEXTURES** to capture originals, repaint them, and drop the results into
+`mods/texture-packs/SLUS-P0120/replacements/` (DuckStation PNG/JPEG/WebP
+format, same filenames). See that folder's README. Replacement display is
+OpenGL-only; anything missing keeps the original art.
+
 ## Maintenance note — do not regenerate without this fix
 
 The committed `generated/` C contains a required fix that the game-code emitter

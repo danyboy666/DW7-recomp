@@ -96,3 +96,9 @@ starvation_dump.jsonl
 AGENTS.md
 opencode_history.md
 opencode.json
+
+# HD-2D runtime state + user texture packs (art is user-supplied)
+/hd2d.ini
+/mods/texture-packs/*/dumps/
+/mods/texture-packs/*/replacements/*
+!/mods/texture-packs/*/replacements/.gitkeep
