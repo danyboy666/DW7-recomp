@@ -164,23 +164,34 @@ modern Octopath-style presentation in one go:
 
 - **3D**: PGXP on — perspective texturing, depth buffer, colour correction and
   fine seam expansion (no affine wobble)
-- **2D / textures**: xBR smoothing, mipmaps + 8x anisotropic filtering
+- **2D / textures**: high-resolution replacement art via the HD texture pack
+  (DuckStation format), xBR smoothing, mipmaps + 8x anisotropic filtering
 - **Image**: 6x internal resolution (1440p), dynamic resolution, FXAA HQ,
   bloom, 16:9 widescreen, clean gradients (dithering off)
-- **Post**: the `mods/hd2d.pfx` colour-grade chain (cool shadows, warm
-  highlights, soft vignette)
+- **Post**: a two-pass chain — a soft blur mixed in **only where the mask says
+  3D geometry** (pixel-art sprites stay crisp while the background recedes),
+  then a colour grade (cool shadows, warm highlights) and a vignette
 
 Toggling it off restores faithful PSX defaults. The upscaling part needs a
 restart (surfaces are allocated at boot); the cosmetic parts apply instantly.
 The mode and any manual overrides persist in `hd2d.ini` next to the executable.
 
-### HD textures
+### HD textures (the high-res 2D half)
 
-For genuinely high-resolution sprites, enable **HD TEXTURES (OPENGL)** — or use
-**DUMP TEXTURES** to capture originals, repaint them, and drop the results into
-`mods/texture-packs/SLUS-P0120/replacements/` (DuckStation PNG/JPEG/WebP
-format, same filenames). See that folder's README. Replacement display is
-OpenGL-only; anything missing keeps the original art.
+`HD-2D MODE` automatically enables the pack when replacements exist. To build
+one:
+
+1. **DUMP TEXTURES** in the Video page; play the scenes you want to improve and
+   quit through the menu. Originals land in
+   `mods/texture-packs/SLUS-P0120/dumps/` (`texupload-*.png`).
+2. Either repaint them, or upscale mechanically:
+   `python3 tools/hd2d_pack.py --pack mods/texture-packs/SLUS-P0120 --scale 4`
+   (Pillow Lanczos + unsharp; writes same-named PNGs to `replacements/`).
+3. Toggle **HD TEXTURES** (or HD-2D) — matched textures are drawn instead of
+   the originals. Verified live: 498 draw matches from a single upscaled title
+   texture.
+
+Replacement display is OpenGL-only; anything missing keeps the original art.
 
 ## Maintenance note — do not regenerate without this fix
 
