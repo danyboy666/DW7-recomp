@@ -55,6 +55,7 @@ aspect_ratio = "4:3"
 # coverage span never covers the display; the trailing-margin fill then blanks
 # the right edge. 0 disables that fill (fixes the missing right-side pixels).
 depth24_trailing_margin = 0
+render_thread = true
 
 [controller]
 # PS1 DualShock: analog by default (pads report ID 0x73).
