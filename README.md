@@ -97,7 +97,12 @@ defaults**; everything here is opt-in. The menu is organised into categories:
 - **GAME** — Quick Save / Quick Load (save-state slot 1), **Save States…** (the
   full slot browser), **Memory Cards…** (per-slot usage; **Format** and
   **Import/Export** of a 128 KB `.mcd` via a native file dialog), **Change
-  Disc**, and **Quit**.
+  Disc**, **Performance…**, and **Quit**.
+- **GAME → PERFORMANCE** — **Fast Load** (host pacing off / 2x / 4x / 8x;
+  safe: every guest frame and IRQ still runs), **CD Drive Speed**
+  (1x authentic / 2x / 4x; deliver sectors sooner — raise gradually), and
+  **Idle-Loop Skip** (verified same-PC interrupt-boundary skip). Saved to
+  `tuning.ini` next to the executable; all default off/authentic.
 - **VIDEO** — display ratio (original 4:3 / widescreen 16:9), upscaling
   (Native/720p/1080p/1440p/4K — restart), dynamic resolution, fullscreen mode
   (windowed / borderless / exclusive), texture smoothing (Nearest / Bilinear /
