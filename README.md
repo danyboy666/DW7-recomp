@@ -91,8 +91,13 @@ this repository; builds are produced locally.
 ## In-game menu
 
 Press **F1** in-game (rebindable as `ShortcutMenu` in `config.ini [KeyMap]`) for
-the shortcut menu (glass/purple theme). The game starts with **faithful PSX
-defaults**; everything here is opt-in. The menu is organised into categories:
+the shortcut menu (glass/purple theme). The game starts in **OPTIMAL** mode:
+borderless fullscreen at the display's own resolution (Match display, so a 2K
+screen renders 1440 internal lines), 4:3 original geometry, bilinear textures,
+FXAA, mipmaps + 4x anisotropic filtering and bicubic FMVs. Everything is
+persisted to `video.ini` next to the executable and re-applied at boot, and
+`GAME → PERFORMANCE` remembers `tuning.ini`. The menu is organised into
+categories:
 
 - **GAME** — Quick Save / Quick Load (save-state slot 1), **Save States…** (the
   full slot browser), **Memory Cards…** (per-slot usage; **Format** and
@@ -103,12 +108,25 @@ defaults**; everything here is opt-in. The menu is organised into categories:
   (1x authentic / 2x / 4x; deliver sectors sooner — raise gradually), and
   **Idle-Loop Skip** (verified same-PC interrupt-boundary skip). Saved to
   `tuning.ini` next to the executable; all default off/authentic.
-- **VIDEO** — display ratio (original 4:3 / widescreen 16:9), upscaling
-  (Native/720p/1080p/1440p/4K — restart), dynamic resolution, fullscreen mode
-  (windowed / borderless / exclusive), texture smoothing (Nearest / Bilinear /
-  xBR), anti-aliasing (Off / FXAA / FXAA HQ), FMV filter + chroma smoothing,
-  scanlines, dithering, bloom, mipmaps + anisotropic filtering, accurate
-  blending, and **Restore Default Settings** at the bottom of the list.
+- **VIDEO** — **Graphics Mode** (Optimal / Faithful), display ratio (4:3
+  original / 16:9), upscaling (Native/720p/1080p/1440p/4K), dynamic
+  resolution, fullscreen mode (windowed / borderless / exclusive), texture
+  smoothing (Nearest / Bilinear / xBR), anti-aliasing (Off / FXAA / FXAA HQ),
+  FMV filter + chroma smoothing, scanlines, dithering, bloom, mipmaps +
+  anisotropic filtering, accurate blending, and **Restore Faithful Settings**.
+  Every row is saved immediately; rows marked **(restart)** apply on the next
+  launch: **Display Ratio**, **Upscaling** and the PERFORMANCE page's
+  **Render Thread**. All other VIDEO rows (dynamic resolution, fullscreen,
+  smoothing, AA, FMV, scanlines, dithering, bloom, mipmaps/aniso, accurate
+  blending, graphics mode) apply live.
+
+  **Optimal** is the default and is re-applicable: Match display, fullscreen
+  borderless, 4:3, bilinear, FXAA, mipmaps + 4x aniso, bicubic FMV.
+  **Faithful** restores the original look: native 240p, nearest, no AA/bloom/
+  mipmaps/chroma, accurate blending on. **16:9** stretches the picture across
+  the full screen (FMV and the game's own 24-bit menus included); DW7 has no
+  widescreen rendering sites, so this is presentation-only and geometrically
+  stretched — 4:3 is the undistorted choice.
 - **CONTROLLER** — Player 1/2 **device** (Keyboard / a connected controller /
   none), pad mode (**Analog (DualShock)** by default, or Digital), and
   **remapping** of both the keyboard per PS1 button (persisted to

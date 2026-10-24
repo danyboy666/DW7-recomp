@@ -47,8 +47,10 @@ memcard_dir = "saves"
 overlay_cache = true
 
 [video]
-# Faithful PSX defaults; all enhancements are opt-in from the in-game menu (F1
-# -> Video). See README "Graphical enhancements".
+# Base renderer settings. The in-game menu (F1 -> Video) defaults to OPTIMAL
+# (fullscreen, match-display resolution, 4:3, bilinear/FXAA) and persists every
+# row to video.ini; "Restore Faithful Settings" returns to the 240p look.
+# See README "Graphical enhancements".
 renderer = "opengl"
 aspect_ratio = "4:3"
 # DW7 renders its 24-bit title/menu with GPU VRAM copies, so the CPU-upload
