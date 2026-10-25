@@ -199,7 +199,12 @@ tools/fmv_pipeline/pipeline.sh all
 
 Output goes to `<exe-dir>/fmv/<name>.mp4` plus `manifest.json`. Without that
 directory the runtime presents FMVs natively (bicubic + chroma smoothing) —
-nothing changes. `PSX_EXTERNAL_FMV=0` disables the path for one run.
+nothing changes. **F1 → VIDEO → ENHANCED FMV** selects `NATIVE` (default: the
+enhanced resolution at the original 15/20 fps cadence), `SMOOTH` (30/40 fps
+RIFE interpolation — can shimmer on fast motion) or `OFF`; the choice persists
+in `video.ini`. `PSX_EXTERNAL_FMV=0` disables the path for one run. The
+replacement applies to both 24-bit and 15-bit movie frames so the picture never
+alternates between enhanced and native.
 
 The 49 small 128x120 streams are battle/spell effects composited as overlays
 into the framebuffer, not full-screen movies; they are deliberately excluded
