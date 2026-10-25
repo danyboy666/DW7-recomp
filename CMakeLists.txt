@@ -16,6 +16,13 @@ project(DW7Recomp LANGUAGES C CXX)
 # The wizard (WIZARD_CMAKE_BLOCK / ENABLE_SETUP_WIZARD) is the first-run disc
 # picker; releases are compiled from the committed generated/ C, so it never
 # needs to generate or rebuild anything on a player's machine.
+# Enhanced (AI-upscaled) FMV playback: replaces only the presented movie frame,
+# clocked by the guest's MDEC decodes; assets are generated locally from the
+# user's own disc (BYOD). Requires FFmpeg (Linux: libav*-dev; Windows: set
+# FFMPEG_ROOT to an LGPL shared build).
+option(PSX_EXTERNAL_FMV "Enhanced FMV playback (requires FFmpeg)" OFF)
+set(FFMPEG_ROOT "" CACHE PATH "FFmpeg shared build root (win64 lgpl-shared)")
+
 set(PSX_RECOMP_UI OFF CACHE BOOL
     "No recomp-ui submodule in this scaffold" FORCE)
 # Full netplay UI — enable after adding recomp-ui + testing:

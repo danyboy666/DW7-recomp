@@ -1,0 +1,13 @@
+{
+  "version": 1,
+  "note": "DW7 slide-show cinematics live inside HBD1PS1D.W71/.W72. LBAs are identical on both discs. The 49 128x120 streams are battle/spell effects composited as small overlays and are deliberately NOT replaced by this pipeline.",
+  "videos": [
+    { "name": "title",             "file": "title.mp4",            "lba0": 178937, "lba1": 191086, "width": 256, "height": 224, "fps": 15, "frames": 1215 },
+    { "name": "intro_world",       "file": "intro_world.mp4",      "lba0": 191087, "lba1": 208636, "width": 256, "height": 224, "fps": 15, "frames": 1755 },
+    { "name": "intro_whirlpool",   "file": "intro_whirlpool.mp4",  "lba0": 208637, "lba1": 214191, "width": 256, "height": 224, "fps": 15, "frames": 555  },
+    { "name": "intro_priestess",   "file": "intro_priestess.mp4",  "lba0": 214192, "lba1": 220641, "width": 256, "height": 224, "fps": 15, "frames": 645  },
+    { "name": "intro_ship",        "file": "intro_ship.mp4",       "lba0": 220642, "lba1": 227091, "width": 256, "height": 224, "fps": 15, "frames": 645  },
+    { "name": "intro_lava",        "file": "intro_lava.mp4",       "lba0": 227092, "lba1": 230311, "width": 256, "height": 224, "fps": 15, "frames": 322  },
+    { "name": "credits",           "file": "credits.mp4",          "lba0": 230312, "lba1": 287611, "width": 320, "height": 224, "fps": 20, "frames": 7640 }
+  ]
+}

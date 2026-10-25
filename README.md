@@ -180,6 +180,34 @@ Further options (config-only today): PGXP (`perspective_texturing`,
 `psx.enhancement.pgxp` mod), HD texture packs (OpenGL), and
 `internal_resolution = "8k"`.
 
+## Enhanced FMVs (BYOD, local only)
+
+The seven full-screen cinematics (title logo, the five intro parts, credits)
+can be replaced with AI-upscaled, motion-interpolated video without touching
+the game's timing: the guest keeps reading and decoding the original STR, and
+only the *presented* frame is substituted, clocked by the guest's own MDEC
+colour decodes. Audio stays on the untouched CD/XA → SPU path.
+
+This repo ships the tooling and the stream manifest, **never the videos**
+(they derive from game data):
+
+```bash
+# Tools: jpsxdec + ffmpeg (WSL) and realesrgan-ncnn-vulkan +
+# rife-ncnn-vulkan (Windows GPU), pointed at by FMV_TOOLS.
+tools/fmv_pipeline/pipeline.sh all
+```
+
+Output goes to `<exe-dir>/fmv/<name>.mp4` plus `manifest.json`. Without that
+directory the runtime presents FMVs natively (bicubic + chroma smoothing) —
+nothing changes. `PSX_EXTERNAL_FMV=0` disables the path for one run.
+
+The 49 small 128x120 streams are battle/spell effects composited as overlays
+into the framebuffer, not full-screen movies; they are deliberately excluded
+(replacing them would need hardware composition at their on-screen rect).
+
+Build flag: `-DPSX_EXTERNAL_FMV=ON` (Linux: libav*-dev; Windows: `-DFFMPEG_ROOT=`
+an LGPL shared FFmpeg build). Off by default.
+
 ## Maintenance note — do not regenerate without this fix
 
 The committed `generated/` C contains a required fix that the game-code emitter
