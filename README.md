@@ -154,7 +154,10 @@ D-pad + A/B also drive it. The menu pauses the game while open.
 ### Multi-disc
 
 Disc 1 and Disc 2 are both registered in `game.toml` (`discs` /
-`disc_serials`), and the menu can mount either. Note that DW7 is an
+`disc_serials`), and the menu can mount either. **CHANGE DISC also records the
+choice as the boot disc** (`settings.toml [disc] selected`), so the next launch
+mounts that disc directly — needed for Disc-2 saves, which should be played by
+booting on Disc 2 rather than swapping mid-session. Note that DW7 is an
 *N-programs* title — Disc 2 boots its own executable (`SLUSP013.46`), so a
 mid-game 1→2 swap still requires Disc 2 to be statically recompiled as a
 second program (framework work, in progress upstream). Until then the menu
