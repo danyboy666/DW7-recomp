@@ -96,3 +96,8 @@ starvation_dump.jsonl
 AGENTS.md
 opencode_history.md
 opencode.json
+
+# Enhanced FMV assets (derived from game data — BYOD, never commit)
+/fmv/
+/tools/fmv_pipeline/src_*
+/tools/fmv_pipeline/work_*

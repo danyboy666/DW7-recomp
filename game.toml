@@ -6,7 +6,14 @@ name = "DW7"
 id = "SLUS-P0120"
 players = 2
 exe = "disc/SLUSP012.06"
-disc = "/mnt/c/Users/dferron/Desktop/opencode working folder/Dragon Warrior Vii pc port/PSX version/Dragon Warrior VII (Disc 1).cue"
+# Multi-disc roster (Disc 1 of 2). The runtime can mount either disc;
+# DW7 is an N-programs set (Disc 2 boots its own EXE SLUSP013.46), so a
+# mid-game 1->2 swap still needs Disc 2 statically recompiled (framework).
+discs = [
+  "/mnt/c/Users/dferron/Desktop/opencode working folder/Dragon Warrior Vii pc port/PSX version/Dragon Warrior VII (Disc 1).cue",
+  "/mnt/c/Users/dferron/Desktop/opencode working folder/Dragon Warrior Vii pc port/PSX version/Dragon Warrior VII (Disc 2).cue",
+]
+disc_serials = ["SLUS-P0120", "SLUS-P0134"]
 load_address = "0x80017F00"
 entry_pc = "0x8008E284"
 text_size = "0x000A4800"
@@ -40,11 +47,21 @@ memcard_dir = "saves"
 overlay_cache = true
 
 [video]
+# Base renderer settings. The in-game menu (F1 -> Video) defaults to OPTIMAL
+# (fullscreen, match-display resolution, 4:3, bilinear/FXAA) and persists every
+# row to video.ini; "Restore Faithful Settings" returns to the 240p look.
+# See README "Graphical enhancements".
 renderer = "opengl"
 aspect_ratio = "4:3"
+# DW7 renders its 24-bit title/menu with GPU VRAM copies, so the CPU-upload
+# coverage span never covers the display; the trailing-margin fill then blanks
+# the right edge. 0 disables that fill (fixes the missing right-side pixels).
+depth24_trailing_margin = 0
+render_thread = true
 
 [controller]
-default_mode = "digital"
+# PS1 DualShock: analog by default (pads report ID 0x73).
+default_mode = "analog"
 
 # Online mount gate: digests + track count + optional TOC fingerprint
 # (see docs/NETPLAY.md).
