@@ -202,12 +202,30 @@ tools/fmv_pipeline/pipeline.sh all
 
 Output goes to `<exe-dir>/fmv/<name>.mp4` plus `manifest.json`. Without that
 directory the runtime presents FMVs natively (bicubic + chroma smoothing) —
-nothing changes. **F1 → VIDEO → ENHANCED FMV** selects `NATIVE` (default: the
-enhanced resolution at the original 15/20 fps cadence), `SMOOTH` (30/40 fps
-RIFE interpolation — can shimmer on fast motion) or `OFF`; the choice persists
-in `video.ini`. `PSX_EXTERNAL_FMV=0` disables the path for one run. The
+nothing changes. `PSX_EXTERNAL_FMV=0` disables the path for one run. The
 replacement applies to both 24-bit and 15-bit movie frames so the picture never
 alternates between enhanced and native.
+
+#### ENHANCED FMV modes (F1 → VIDEO)
+
+| Value | What it shows |
+|---|---|
+| `OFF` | The original disc video through the normal present path (bicubic + chroma smoothing). No external assets are used. |
+| `NATIVE` (default) | The enhanced 2K video at the **original 15/20 fps cadence** — only the original frames of the 2× file are shown. |
+| `SMOOTH` | The same enhanced 2K video at **30/40 fps**, including the RIFE-generated in-between frames. |
+
+All three keep the guest's own movie timing and audio. `NATIVE` and `SMOOTH`
+use the same assets, so resolution and sharpness are identical — the only
+difference is **how often the picture changes**. That difference is visible on
+motion (camera pans, the sailing ship, particles), not on static shots; the
+title logo, for example, begins with several seconds of identical frames.
+
+Measured on the generated `title.mp4`: in a moving segment the odd frames are
+genuine interpolations (mean difference to the blend of their neighbours 0.23,
+versus 0.64 to the previous frame), so `SMOOTH` really doubles the displayed
+frame rate rather than duplicating frames. RIFE can shimmer or ghost on very
+fast motion, which is why `NATIVE` is the default. The choice persists in
+`video.ini` (`enhanced_fmv = 0/1/2`).
 
 The 49 small 128x120 streams are battle/spell effects composited as overlays
 into the framebuffer, not full-screen movies; they are deliberately excluded
