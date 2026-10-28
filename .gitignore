@@ -101,3 +101,7 @@ opencode.json
 /fmv/
 /tools/fmv_pipeline/src_*
 /tools/fmv_pipeline/work_*
+
+# Third-party artwork / box art: BYOD, never commit
+/artwork/
+/assets/menu/cover.*
