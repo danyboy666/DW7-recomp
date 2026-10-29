@@ -100,9 +100,9 @@ persisted to `video.ini` next to the executable and re-applied at boot, and
 categories:
 
 - **GAME** — Quick Save / Quick Load (save-state slot 1), **Save States…** (the
-  full slot browser), **Memory Cards…** (per-slot usage; **Format** and
-  **Import/Export** of a 128 KB `.mcd` via a native file dialog), **Change
-  Disc**, **Performance…**, and **Quit**.
+  full slot browser), **Memory Cards…** (per-slot usage; **Format**,
+  **Load Save or Card Image**, **Save Card to File**), **Load External
+  Save…** (see below), **Change Disc**, **Performance…**, and **Quit**.
 - **GAME → PERFORMANCE** — **Fast Load** (host pacing off / 2x / 4x / 8x;
   safe: every guest frame and IRQ still runs), **CD Drive Speed**
   (1x authentic / 2x / 4x; deliver sectors sooner — raise gradually), and
@@ -162,6 +162,39 @@ booting on Disc 2 rather than swapping mid-session. Note that DW7 is an
 mid-game 1→2 swap still requires Disc 2 to be statically recompiled as a
 second program (framework work, in progress upstream). Until then the menu
 switches the mounted image but the game cannot continue onto Disc 2's program.
+
+### External saves
+
+`GAME → Load External Save…` (or `MEMORY CARDS…` to target a specific slot)
+opens a native file dialog and reads the file by content — no conversion tool
+needed:
+
+| Input | Formats |
+|---|---|
+| Whole memory card | `.mcd`, `.mcr`, `.mc`, `.srm`, `.bin`/`.psm`/`.ps` (128 KB raw), `.vm1` (PS3 virtual card), `.gme` (DexDrive), `.vgs`/`.mem`, `.psx` |
+| Single save | MemcardRex **raw** export (`N` × 8 KB `.bin`/`.raw`), `.mcs` (PSXGame Edit) |
+
+A whole-card image replaces the selected slot (the 128 KB real-card layout is
+imported verbatim, so card-1/card-2 images from any emulator work). A single
+save is inserted into free space on the selected card; its directory name comes
+from the file name, so keep MemcardRex's default `BISLPS-…`/`BASLUS-…` naming
+(rename the export before importing if you want a different entry name).
+Single-save import refuses to duplicate an existing name and reports when the
+card is full; card images replace the slot wholesale, so **Save Card to File**
+first if you want a backup.
+
+**When a save can be loaded is the original game's rule, not the port's:**
+Dragon Warrior VII only *loads* saves from its own title screen (**Continue**).
+Import at any time — the import is live immediately — then reach the title
+screen (relaunch, or quit to the desktop with the menu's Quit row) and pick
+Continue. There is no mid-play load option in the original game, and the
+in-game church/service only writes. The MEMORY CARDS page repeats this rule
+in-line as a reminder.
+
+PS2 memory cards (8 MB `.vm2`) are rejected with a message; PS1 cards are
+128 KB. The `.mcs`, `.psv` and niche single-save formats that carry a directory
+header are supported only in the forms listed above (`.psv` from PS3 is not
+accepted yet).
 
 ## Graphical enhancements
 
