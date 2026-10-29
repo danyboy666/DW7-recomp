@@ -23,6 +23,20 @@ A native PC port of **Dragon Warrior VII** (PlayStation, 2001), built with
 | Year | 2001 |
 | Serial | SLUS-01206 (Disc 1 of 2) |
 
+## Screenshots
+
+| In-game menu (Modern UI) | |
+|---|---|
+| ![GAME](docs/screenshots/10-menu-game.jpg) | ![MEMORY CARDS](docs/screenshots/13-menu-memory-cards.jpg) |
+| ![VIDEO](docs/screenshots/11-menu-video.jpg) | ![CONTROLLER](docs/screenshots/12-menu-controller.jpg) |
+| ![PERFORMANCE](docs/screenshots/14-menu-performance.jpg) | |
+
+| Gameplay | |
+|---|---|
+| ![World map](docs/screenshots/01-world-map.jpg) | ![Battle](docs/screenshots/03-battle-command.jpg) |
+| ![Dialogue](docs/screenshots/02-dialogue.jpg) | ![Battle action](docs/screenshots/04-battle-action.jpg) |
+| ![Field](docs/screenshots/05-forest.jpg) | |
+
 ## Status
 
 Boots and runs on **Linux** and **Windows** with the OpenGL, Vulkan or software
@@ -30,11 +44,13 @@ renderer:
 
 - intro and title screens, and the main menu (**Continue / New Game /
   Delete File**) — menus render and accept input
-- **New Game → name entry**
+- **New Game → name entry**, the opening field and story sequences, the world
+  map, dialogue, battles, and the Modern-UI in-game menu (save states, memory
+  cards incl. external-save import, video, controller remapping)
 
-Under active bring-up: the opening field/story, battles, and remaining
-game overlays. `main` tracks a stable, playable build; new work lands on
-`dev` first.
+Under active bring-up: Disc 2's own executable (`SLUSP013.46`) and any
+remaining game overlays. `main` tracks a stable, playable build; new work lands
+on `dev` first.
 
 ## Requirements
 
