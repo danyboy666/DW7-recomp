@@ -33,9 +33,11 @@ A native PC port of **Dragon Warrior VII** (PlayStation, 2001), built with
 
 | Gameplay | |
 |---|---|
-| ![World map](docs/screenshots/01-world-map.jpg) | ![Battle](docs/screenshots/03-battle-command.jpg) |
-| ![Dialogue](docs/screenshots/02-dialogue.jpg) | ![Battle action](docs/screenshots/04-battle-action.jpg) |
-| ![Field](docs/screenshots/05-forest.jpg) | |
+| ![Title screen](docs/screenshots/13-title-screen.jpg) | ![World map](docs/screenshots/01-world-map.jpg) |
+| ![Coastal dialogue](docs/screenshots/06-coastal-dialogue.jpg) | ![Dialogue](docs/screenshots/07-dialogue.jpg) |
+| ![Battle command](docs/screenshots/08-boss-command.jpg) | ![Battle action](docs/screenshots/09-boss-action.jpg) |
+| ![Battle magic](docs/screenshots/10-battle-magic.jpg) | ![Battle summon](docs/screenshots/11-battle-summon.jpg) |
+| ![Story scene](docs/screenshots/12-confession.jpg) | ![Field](docs/screenshots/05-forest.jpg) |
 
 ## Status
 
