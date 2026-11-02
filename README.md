@@ -69,7 +69,26 @@ build-release/DW7_Recompiled --game game.toml --disc /path/to/DW7.cue
 build-release-win\DW7_Recompiled.exe --game game.toml --disc "C:\path\to\DW7.cue"
 ```
 
-The disc path may also be set once in `game.toml` (`[runtime] disc = ...`).
+**No arguments needed — just drop the disc image into a `disc/` folder:**
+
+```text
+DW7-Recompiled/
+  DW7_Recompiled.exe
+  disc/
+    Dragon Warrior VII (Disc 1).cue   <- with its .iso/.bin next to it
+    Dragon Warrior VII (Disc 2).cue
+```
+
+At launch the runtime scans `disc/` (next to the executable, or the game
+directory when running from a build tree), mounts the first image it can
+read and remembers it in `disc.cfg`. `CHANGE DISC` lists every image in the
+folder in filename order (Disc 1 first), so multi-disc play works from the
+folder alone — no picker dialog on a normal launch.
+
+You can still be explicit instead: `--disc <image>` overrides the folder,
+`game.toml` `[game] discs` is used when present, and `disc.cfg` holds the
+last mounted image. Relative paths are resolved against the executable, not
+the working directory.
 
 ## Repository layout
 
